@@ -4,6 +4,7 @@
 #include<vector>
 #include<list>
 #include<queue>
+#include<stack>
 
 using namespace std;
 class subSet;
@@ -20,6 +21,7 @@ friend class K;
 friend class pairs;
 friend class subSet;
 Graph(int v1);
+Graph(int v1,int **weigh,vector<vector<int> > vect);
 void addEdge(int v1,int v2,int wt);
 void printGraph();
 void BFS(int v1);
@@ -31,7 +33,10 @@ void mstPrim();
 void mstKruskal();
 int findSet(int,subSet*);
 void union2(int a,int b,subSet *ss);
-void toposort();
+void topoSort();
+void topoUtil(int i,bool* visited,stack<int>& Stack);
+void bellman_ford(int v1);
+void johnson();
 friend ostream& operator<<(ostream& stream,Graph g);
 //friend istream& operator>>(istream& stream,Graph g);
 };
