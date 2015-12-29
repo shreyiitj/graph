@@ -26,9 +26,9 @@ g3.addEdge(0,4,9);
 g3.addEdge(1,4,3);
 g3.addEdge(4,2,6);
 g3.addEdge(5,3,1);
+g3.addEdge(2,1,-1);
 
-
-//g3.printGraph();
+g3.printGraph();
 //cout<<"\nBFS:\n";
 //g3.BFS(0);
 //cout<<"\n\n";
@@ -37,13 +37,15 @@ cout<<"\n";
 //g3.dijkstra(0);
 cout<<"\n";
 //g3.mstPrim();
-cout<<"\n";
+//cout<<"\n";
 //g3.mstKruskal();
+//cout<<"\n";
+//g3.topoSort();
 cout<<"\n";
-g3.topoSort();
-
-
-//g3.floyd_warshal();
+//g3.bellman_ford(0);
+cout<<"\n";
+//g3.floyd_warshal();          //all pair shortest path
+g3.johnson();                 //all pair shortest path(bellman+dijkstra)(modifying edges)
 
 
 /*  **********  to store and retrieve from file  *****************
