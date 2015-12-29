@@ -23,6 +23,12 @@ for(i=0;i<v1;i++)
 }
 }
 
+Graph(int v1,int **weigh,vector<vector<int> > vect)
+{
+    v=v1;
+    w=weigh;
+    vec=vect;
+}
 
 void Graph::addEdge(int v1,int v2,int wt)
 {
@@ -38,9 +44,9 @@ void Graph::addEdge(int v1,int v2,int wt)
         if(j!=1)
         {
     vec[v1].push_back(v2);
-    vec[v2].push_back(v1);
+    //vec[v2].push_back(v1);
     w[v1][v2]=wt;
-    w[v2][v1]=wt;
+    //w[v2][v1]=wt;
     e++;
         }
         //else cout<<"edge ("<<v1<<","<<v2<<") are already present";
@@ -336,6 +342,105 @@ void Graph::union2(int a,int b,subSet *ss)
          ss[b_set].parent=a_set;
          ss[a_set].rank++;
     }
+
+}
+
+void Graph::topoSort()
+{
+    cout<<"Topological Sort()"<<endl;
+    int i;
+    stack<int> Stack;
+    bool* visited=new bool[v]();
+    for(i=0;i<v;i++)
+    {
+        if(visited[i]==0)
+        {
+        topoUtil(i,visited,Stack);
+
+        }
+    }
+    while(!Stack.empty())
+    {
+        cout<<Stack.top()<<" ";
+        Stack.pop();
+    }
+    cout<<endl;
+}
+
+void Graph::topoUtil(int i,bool* visited,stack<int>& Stack)
+{
+    visited[i]=1;
+    vector<int>::iterator p;
+    int j;
+    for(p=vec[i].begin()+1;p!=vec[i].end();p++)
+    {
+        if(visited[*p]==0) topoUtil(*p,visited,Stack);
+    }
+    Stack.push(i);
+}
+
+void Graph::bellman_ford(int v1)
+{
+    //cout<<"enter"<<endl;
+    int i;
+    int src,des,weigh;
+    vector<int>::iterator j;
+    int *dist=new int[v];
+    for(i=0;i<v;i++)
+    {
+        dist[i]=MAXINT;
+    }
+    dist[v1]=0;
+    for(i=0;i<v;i++)
+    {
+        src=i;
+        for(j=vec[i].begin()+1;j!=vec[i].end();j++)
+        {
+                des=*j;
+                weigh=w[i][*j];
+                if(dist[src]!=MAXINT && dist[des]>dist[src]+weigh)
+                    dist[des]=dist[src]+weigh;
+        }
+    }
+    //cout<<"here"<<endl;
+            //check all edges once again to detect negative weight cycle
+     for(i=0;i<v;i++)
+    {
+        src=i;
+        for(j=vec[i].begin()+1;j!=vec[i].end();j++)
+        {
+                des=*j;
+                weigh=w[i][*j];
+                if(dist[src]!=MAXINT && dist[des]>dist[src]+weigh)
+                   {
+                     cout<<"there is negative weight cycle present"<<endl;
+                    return ;
+
+                   }
+        }
+
+    }
+    cout<<"node     distance"<<endl;
+    for(i=0;i<v;i++)
+    {
+        cout<<i<<"  "<<dist[i]<<endl;
+    }
+    cout<<endl;
+}
+
+void Graph::johnson()
+{
+    vector<int> p;          //1.create a new vertex and connect to every other vertex with edge weight 0
+    p.push_back(v);
+    int i,j;
+    for(i=0;i<v;i++)
+    {
+        p.push_back(i);
+
+    }
+    vec.push_back(p);
+    Graph g(v+1);
+    int *dist=new int[v]();          //all 0
 
 }
 /*istream& operator>>(istream& stream,Graph g)
